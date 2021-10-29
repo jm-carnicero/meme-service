@@ -1,0 +1,11 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: webhook-receiver-meme-service
+spec:
+  serviceAccountName: webhook-receiver
+  triggers:
+    - template:
+        name: webhook-receiver-meme-service
+      bindings:
+        - ref: webhook-receiver-meme-service

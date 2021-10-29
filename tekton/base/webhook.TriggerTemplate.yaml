@@ -1,0 +1,41 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: webhook-receiver-meme-service
+spec:
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: meme-service-
+    spec:
+      params:
+      - name: app-name
+        value: "meme-service"
+      - name: source-repo
+        value: "https://github.com/jm-carnicero/meme-service"
+      - name: image-repo
+        value: "quay.io/mhillb/meme-service"
+      pipelineRef:
+        name: meme-service
+      serviceAccountName: build-bot
+      workspaces:
+      - name: pipeline-shared-data
+        volumeClaimTemplate:
+          spec:
+            accessModes:
+              - ReadWriteOnce 
+            resources:
+              requests:
+                storage: 1Gi
+      - name: manifest-target-repo
+        volumeClaimTemplate:
+          spec:
+            accessModes:
+              - ReadWriteOnce 
+            resources:
+              requests:
+                storage: 1Gi
+      - name: git-credentials
+        secret:
+          secretName: git-credentials-backend

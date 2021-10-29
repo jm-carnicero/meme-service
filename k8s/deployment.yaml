@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meme-service
+  labels:
+    app: meme-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: meme-service
+  template:
+    metadata:
+      labels:
+        app: meme-service
+    spec:
+      containers:
+      - name: nextjs
+        image: quay.io/mhillb/placeholder_image:placeholder_tag
+        ports:
+        - containerPort: 8888

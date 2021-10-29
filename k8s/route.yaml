@@ -1,0 +1,8 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: meme-service
+spec:
+  to:
+    kind: Service
+    name: meme-service
